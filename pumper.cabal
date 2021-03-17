@@ -1,0 +1,97 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 09203ad9a95a52ffd7cea23b3bf9e1e0719aa2975f91bdd03ebaf956cca1256b
+
+name:           pumper
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/pumper#readme>
+homepage:       https://github.com/githubuser/pumper#readme
+bug-reports:    https://github.com/githubuser/pumper/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2021 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/pumper
+
+library
+  exposed-modules:
+      Neural
+      NeuralData
+      NeuralLayerDense
+  other-modules:
+      Paths_pumper
+  hs-source-dirs:
+      src
+  ghc-options:
+    -optl/opt/vagrant/embedded/lib/libiconv.dylib
+  build-depends:
+      base >=4.7 && <5
+    , text >= 1.2.4.1
+    , time >= 1.9.3
+    , containers >= 0.6.2.1
+    , gtk3
+    , req
+    , aeson
+    , formatting
+    , mtl
+    , case-insensitive
+    , bytestring
+    , blaze-builder
+    , unordered-containers
+    , vector
+    , http-client
+    , regex-tdfa
+    , tuple
+    , cairo
+    , gi-gtk
+    , gi-gtk-declarative
+    , gi-gtk-declarative-app-simple
+    , matplotlib
+    , random
+  default-language: Haskell2010
+
+executable pumper-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_pumper
+  hs-source-dirs:
+      app
+  ghc-options:
+    -optl/opt/vagrant/embedded/lib/libiconv.dylib -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , text >= 1.2.4.1
+    , time >= 1.9.3
+    , pumper
+    , async
+    , stm
+    , async-timer
+    , mtl
+    , glib
+    , containers
+  default-language: Haskell2010
+
+test-suite pumper-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_pumper
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , pumper
+  default-language: Haskell2010
