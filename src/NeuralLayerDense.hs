@@ -142,13 +142,17 @@ categoricalCrossEntropyLossBatched [a] [t] = [categoricalCrossEntropyLoss a t]
 categoricalCrossEntropyLossBatched actuals targets =
   categoricalCrossEntropyLoss (head actuals) (head targets) : categoricalCrossEntropyLossBatched (tail actuals) (tail targets)
 
---categoricalCrossEntropyLossBackward :: [Double] -> [Int] -> Double
---categoricalCrossEntropyLossBackward actual target = negate (logSourceTimesTarget actual target)
---
---categoricalCrossEntropyLossBatchedBackward :: [[Double]] -> [[Int]] -> [Double]
---categoricalCrossEntropyLossBatchedBackward [a] [t] = [categoricalCrossEntropyLossBackward a t]
---categoricalCrossEntropyLossBatchedBackward actuals targets =
---categoricalCrossEntropyLossBatchedBackward (head actuals) (head targets) : categoricalCrossEntropyLossBatchedBackward (tail actuals) (tail targets)
+listDivide :: [Double] -> [Int] -> Double
+listDivide [a] [t] = fromIntegral t / a
+listDivide actual target = fromIntegral (head target) / head actual + listDivide (tail actual) (tail target)
+
+categoricalCrossEntropyLossBackward :: [Double] -> [Int] -> Double
+categoricalCrossEntropyLossBackward dValues yTrueOneVector = negate (listDivide dValues yTrueOneVector) / fromIntegral (length dValues)
+
+categoricalCrossEntropyLossBatchedBackward :: [[Double]] -> [[Int]] -> [Double]
+categoricalCrossEntropyLossBatchedBackward [a] [t] = [categoricalCrossEntropyLossBackward a t]
+categoricalCrossEntropyLossBatchedBackward actuals targets =
+  categoricalCrossEntropyLossBackward (head actuals) (head targets) : categoricalCrossEntropyLossBatchedBackward (tail actuals) (tail targets)
   
 mean :: [Double] -> Double
 mean xs = sum xs / fromIntegral (length xs)
